@@ -1,61 +1,175 @@
-# GameBackLog v1
+# GameBackLog (v1)
 
-! Manter o mais simples possivel nesse inicio depois add features
+> Um projeto simples para gerenciamento pessoal de backlog de jogos.
 
-## Oque e?
+---
 
-- Um projeto para uso pessoal focado na criacao de backlog de jogos
+## Sobre o projeto
 
-## Oque seria um backlog de jogos?
+O **GameBackLog** é uma aplicação focada em organizar e gerenciar sua lista de jogos pendentes — aqueles que você ainda quer jogar ou terminar no futuro.
 
-- E uma lista de jogos ainda nao jogados que voce pretende experimentar ou retornar a jogar em outro momento
+A ideia principal é substituir listas manuais (como arquivos de texto ou planilhas) por uma solução mais dinâmica, organizada e fácil de manter.
 
-## Qual problema a GameBackLog resolve?
+---
 
-- Atualmente minha lista de backlog e um arquivo com um monte de jogos separado por console que pertence, genero, empresa que publicou e etc, minha intencao e tornar mais dinamico e menos manual a manutencao dessa lista
+## Objetivo
 
-## Tecnologias usadas
+Facilitar o controle do seu backlog de jogos, permitindo:
 
-- Front: React JS
-- Backend: Express JS
-- Banco de Dados: MySQL
+* Adicionar novos jogos
+* Organizar por gênero, plataforma e publisher
+* Acompanhar o progresso de jogatina
+* Registrar jogos finalizados
+* Manter tudo centralizado e de forma simples
 
+---
 
-## Planejamento e Modelagem
+## Problema que resolve
 
-    Backlog
-    ---
+Atualmente, o controle do backlog é feito manualmente por mim, com informações espalhadas como:
 
-    + jogos
-    + generoFavorito
-    + quantJogosZerados
-    ---
+* Console
+* Gênero
+* Empresa publicadora
+* Status do jogo
 
+Isso torna a manutenção trabalhosa e pouco prática.
 
-    Jogo
-    ---
+O **GameBackLog** surge para tornar esse processo:
 
-    + capa
-    + titulo
-    + genero
-    + sinopse
-    + plataformas
-    + publisher
-    + statusDeJogatinaAtual
-    ---
+* Mais rápido 
+* Mais organizado 
+* Menos manual 
 
-    Plataforma
+---
 
-    + id 
-    + titulo
-    + fabricante
-    + geracao
-    ---
+## Tecnologias utilizadas
 
-    FinalizacaoDeJogo
+* **Frontend:** React JS
+* **Backend:** Express JS
+* **Banco de Dados:** MySQL
 
-    + dataDeZeramento
-    + status
-    + plataformaEmQueFinalizou
-    + review
+---
 
+## Modelagem inicial
+
+### Usuario
+
+Representa o usuario em si.
+
+* `id (PK)`
+* `nome`
+* `email`
+* `senha`
+* `created_at`
+
+---
+
+### Jogo
+
+Representa cada jogo individual no backlog.
+
+**Atributos:**
+
+* `id (PK)`
+* `titulo`
+* `genero`
+* `sinopse`
+* `publisher_id (FK)`
+* `created_at`
+
+---
+
+### Publisher
+
+Representa as empresas que lançaram os jogos
+
+Publisher
+- id (PK)
+- nome
+
+* `id `
+* `nome `
+
+### Plataforma
+
+Representa os consoles/plataformas disponíveis.
+
+**Atributos:**
+
+* `id`
+* `titulo`
+* `fabricante`
+* `geracao`
+
+---
+
+### Genero 
+
+Registra informações sobre o genero do jogo.
+
+**Atributos:**
+
+* `id`
+* `nome`
+
+### JogoGenero
+
+Registra a relação entre jogo e genero
+
+* `jogo_id (FK)`
+* `genero_id (FK)`
+---
+
+### JogoPlataforma
+
+Registra a relação entre jogo e plataforma
+
+* `jogo_id (FK)`
+* `plataforma_id (FK)`
+
+### Backlog
+
+Representa o conjunto geral de jogos do usuário.
+
+* `id (PK)`
+* `usuario_id (FK)`
+* `jogo_id (FK)`
+* `status ('jogando', 'a jogar', 'zerado', 'pausado', 'dropado')`
+* `created_at`
+
+### Finalização
+
+Quando um jogo tem status de (dropado ou zerado) o usuario tem direito a review
+
+* `id (PK)`
+* `backlog_id (FK)`
+* `plataforma_id (FK)`
+* `review`
+* `nota`
+
+Relacionamentos
+
+Usuario 1:N Backlog
+Jogo 1:N Backlog
+Jogo N:N Genero
+Jogo N:N Plataforma
+Publisher 1:N Jogo
+Backlog 1:N Finalizacao
+
+## Status do projeto
+
+- Em desenvolvimento inicial
+- Foco atual: estrutura base e funcionalidades principais
+
+---
+
+## Contribuição
+
+Projeto pessoal, mas sugestões são sempre bem-vindas!
+
+---
+
+## Licença
+
+Uso pessoal.
