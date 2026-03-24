@@ -1,28 +1,25 @@
-import { useState } from "react";
 import { NavLink } from "react-router";
+
 import PerfilStyle from "./Perfil.module.css";
 
 interface IPerfilProps {
     userTag: string;
+    backlogLength: number;
+    finishedGames: number
 }
 
-export const Perfil = ({ userTag }: IPerfilProps) => {
-    const [gameStatus, setGameStatus] = useState({
-        quantityBackLogGames: 0,
-        finishedGames: 0,
-    });
-
+export const Perfil = ({ userTag, backlogLength, finishedGames }: IPerfilProps) => {
     return (
-        <div className={ PerfilStyle.userContainer }>
+        <div className={ PerfilStyle.perfilContainer }>
             <div className={ PerfilStyle.perfil }>
-                <NavLink to="/perfil">
+                <NavLink to="/perfil" className={ PerfilStyle.navLink }>
                     { userTag }
                 </NavLink>                
             </div>
 
             <div className={ PerfilStyle.gameStatus }>
-                <p>Numero de Jogos no Backlog: { gameStatus.quantityBackLogGames }</p>
-                <p>Jogos Zerados: { gameStatus.finishedGames }</p>
+                <p>Numero de Jogos no Backlog: { backlogLength }</p>
+                <p>Jogos Zerados: { finishedGames }</p>
             </div>
         </div>
     );
